@@ -375,6 +375,11 @@ def renommer_colonnes_intelligemment(df):
     print("-" * 80)
     
     colonnes = df.columns.tolist()
+    
+    for idx, nom_exact in NOMS_COLONNES_EXACTES.items():
+        if idx < len(colonnes):
+            colonnes[idx] = nom_exact
+    
     nouvelles_colonnes = []
     stats_de_base = ['Score', 'Momentum', 'xG', 'SOT', 'SOFF', 'Corners', 
                      'Attacks', 'Dn Attacks', 'Poss %', 'Y Cards', 'R Cards', 'Penalties']
