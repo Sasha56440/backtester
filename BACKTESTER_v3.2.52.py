@@ -224,9 +224,19 @@ def renommer_colonnes_intelligemment(df):
     compteur_stats = {stat: {'H': 0, 'A': 0} for stat in stats_de_base}
     renommages_effectues = []
     
+    prefixes_cotes = ('3-Way', 'Over', 'Under', 'BTTS')
+    
     for i, col in enumerate(colonnes):
         col_str = str(col)
         nouvelle_col = col_str
+        
+        # Ajouter AT aux colonnes de cotes Live (sans suffixe .1)
+        if any(col_str.startswith(prefix) for prefix in prefixes_cotes):
+            if '.' not in col_str and not col_str.endswith(' AT'):
+                nouvelle_col = f'{col_str} AT'
+                renommages_effectues.append((col_str, nouvelle_col))
+                nouvelles_colonnes.append(nouvelle_col)
+                continue
         
         # Détecter les colonnes de stats
         for stat in stats_de_base:
