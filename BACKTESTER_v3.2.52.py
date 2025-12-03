@@ -190,6 +190,34 @@ def detecter_delimiteur_csv(filepath, sample_size=4096):
         meilleur = max(counts, key=counts.get)
         return meilleur if counts[meilleur] > 0 else ','
 
+def lire_csv_robuste(filepath):
+    """Lit un CSV en testant plusieurs délimiteurs et moteurs pandas."""
+    delim_detecte = detecter_delimiteur_csv(filepath)
+    candidats = [delim_detecte] + [d for d in [',', ';', '\t', '|'] if d != delim_detecte]
+    derniere_exception = None
+    
+    for delim in candidats:
+        print(f"  • Tentative lecture CSV (délimiteur='{delim}', moteur='c')")
+        try:
+            df = pd.read_csv(filepath, sep=delim, skiprows=1, low_memory=False)
+            print(f"    ✅ Lecture réussie avec délimiteur '{delim}'")
+            return df, delim
+        except pd.errors.ParserError as exc:
+            derniere_exception = exc
+            print("    ↪️ ParserError avec moteur C, essai moteur 'python'...")
+            try:
+                df = pd.read_csv(filepath, sep=delim, skiprows=1, engine='python')
+                print(f"    ✅ Lecture réussie avec délimiteur '{delim}' (moteur python)")
+                return df, delim
+            except Exception as exc_py:
+                derniere_exception = exc_py
+                print(f"    ❌ Échec avec délimiteur '{delim}' (moteur python)")
+                continue
+    
+    if derniere_exception:
+        raise derniere_exception
+    raise ValueError("Impossible de lire le fichier CSV")
+
 def convertir_nombre_excel_europeen(valeur):
     """
     Convertit simplement un nombre au format Excel européen
@@ -398,19 +426,8 @@ def charger_dataset(filepath):
     
     try:
         if extension == '.csv':
-            delimiteur = detecter_delimiteur_csv(filepath)
-            print(f"  • Fichier CSV détecté (délimiteur='{delimiteur}')")
-            try:
-                df = pd.read_csv(filepath, sep=delimiteur, skiprows=1, low_memory=False)
-            except pd.errors.ParserError:
-                # Reprendre avec l'engine Python, plus permissif
-                df = pd.read_csv(
-                    filepath,
-                    sep=delimiteur,
-                    skiprows=1,
-                    low_memory=False,
-                    engine='python'
-                )
+            df, delimiteur = lire_csv_robuste(filepath)
+            print(f"  • Fichier CSV chargé (délimiteur final='{delimiteur}')")
                 
         elif extension in ['.xls', '.xlsx']:
             df = pd.read_excel(filepath)
