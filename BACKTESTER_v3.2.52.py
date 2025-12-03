@@ -331,6 +331,7 @@ def renommer_colonnes_intelligemment(df):
                      'Attacks', 'Dn Attacks', 'Poss %', 'Y Cards', 'R Cards', 'Penalties']
     
     compteur_stats = {stat: {'H': 0, 'A': 0} for stat in stats_de_base}
+    compteur_stats_globaux = {stat: 0 for stat in stats_de_base}
     renommages_effectues = []
     
     prefixes_cotes = ('3-Way', 'Over', 'Under', 'BTTS')
@@ -346,6 +347,23 @@ def renommer_colonnes_intelligemment(df):
                 renommages_effectues.append((col_str, nouvelle_col))
                 nouvelles_colonnes.append(nouvelle_col)
                 continue
+        
+        # Colonnes globales (sans préfixe H/A)
+        if col_str in stats_de_base:
+            count = compteur_stats_globaux[col_str]
+            if count == 0:
+                nouvelle_col = f'{col_str} AT'
+            elif count == 1:
+                nouvelle_col = f'{col_str} HT'
+            elif count == 2:
+                nouvelle_col = f'{col_str} FT'
+            else:
+                nouvelle_col = f'{col_str} {count}'
+            compteur_stats_globaux[col_str] += 1
+            if nouvelle_col != col_str:
+                renommages_effectues.append((col_str, nouvelle_col))
+            nouvelles_colonnes.append(nouvelle_col)
+            continue
         
         # Détecter les colonnes de stats
         for stat in stats_de_base:
