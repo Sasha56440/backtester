@@ -356,7 +356,8 @@ def _normaliser_colonne_minutes(serie):
         val = val.replace("'", '')
         parties = [p.strip().replace(' ', '') for p in val.split(',')]
         parties = [p for p in parties if p]
-        return ', '.join(parties)
+        resultat = ', '.join(parties)
+        return f"'{resultat}" if resultat else ''
     
     return serie.map(normaliser)
 
