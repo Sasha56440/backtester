@@ -38,6 +38,13 @@ MAPPING_COLONNES = {
     'cote_away': 98,        # Pre-Match Odds - 3-Way: Away
 }
 
+# Noms robustes des colonnes de cotes utilisées dans les calculs
+COLONNES_COTES = {
+    'cote_home': '3-Way: Home.1',
+    'cote_draw': '3-Way: Draw.1',
+    'cote_away': '3-Way: Away.1',
+}
+
 # Noms exacts des colonnes selon la documentation
 NOMS_COLONNES_EXACTES = {
     # Alert Time Stats (indices 9-32)
@@ -164,9 +171,15 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def pause():
-    """Met le programme en pause"""
+    """Met le programme en pause si l'entrée standard est interactive"""
     print("\n" + "-"*80)
-    input("📌 Appuyez sur ENTRÉE pour fermer cette fenêtre...")
+    if not sys.stdin.isatty():
+        print("📌 Fermeture automatique (mode non interactif détecté).")
+        return
+    try:
+        input("📌 Appuyez sur ENTRÉE pour fermer cette fenêtre...")
+    except EOFError:
+        print("📌 Entrée indisponible, fermeture automatique.")
 
 def convertir_nombre_excel_europeen(valeur):
     """
@@ -360,9 +373,14 @@ def calculer_fav_und(df, colonnes_list, seuil=SEUIL_FAVORI):
     
     stats_mapping = construire_mapping_dynamique(colonnes_list)
     
-    # Vérifier les colonnes de cotes
-    if len(df.columns) <= MAPPING_COLONNES['cote_away']:
-        print("  ⚠️ Colonnes de cotes manquantes")
+    # Vérifier les colonnes de cotes par NOM pour éviter les erreurs d'index
+    colonnes_indispensables = [
+        COLONNES_COTES['cote_home'],
+        COLONNES_COTES['cote_away'],
+    ]
+    colonnes_manquantes = [col for col in colonnes_indispensables if col not in df.columns]
+    if colonnes_manquantes:
+        print(f"  ⚠️ Colonnes de cotes manquantes : {', '.join(colonnes_manquantes)}")
         return df
     
     # Créer les 72 colonnes Fav/Und
@@ -387,8 +405,9 @@ def calculer_fav_und(df, colonnes_list, seuil=SEUIL_FAVORI):
         # Récupérer les cotes pour le calcul SANS les modifier dans le DataFrame
         try:
             # Lire les valeurs
-            val_home = df.iloc[idx, MAPPING_COLONNES['cote_home']]
-            val_away = df.iloc[idx, MAPPING_COLONNES['cote_away']]
+            index_label = df.index[idx]
+            val_home = df.at[index_label, COLONNES_COTES['cote_home']]
+            val_away = df.at[index_label, COLONNES_COTES['cote_away']]
             
             # Convertir pour le calcul uniquement
             if pd.notna(val_home):
@@ -482,7 +501,7 @@ def convertir_dataframe_excel_europeen_final(df):
     """
     print("\n🔧 Conversion finale au format Excel européen...")
     
-    colonnes_texte = ['Date', 'Timer', 'Strike', 'Region', 'League', 'Home', 'Away']
+    colonnes_texte = {'date', 'timer', 'strike', 'region', 'league', 'home', 'away'}
     colonnes_converties = 0
     
     # Créer un DataFrame de résultat avec toutes les colonnes en object (string)
@@ -492,9 +511,11 @@ def convertir_dataframe_excel_europeen_final(df):
     for i, col in enumerate(df.columns):
         col_str = str(col)
         
+        col_normalise = col_str.strip().lower()
         # Skip les colonnes texte - les copier telles quelles
-        if any(txt in col_str for txt in colonnes_texte):
-            df_resultat[col] = df.iloc[:, i].astype(str)
+        if col_normalise in colonnes_texte:
+            serie_textuelle = df.iloc[:, i]
+            df_resultat[col] = serie_textuelle.fillna('').astype(str)
             continue
         
         # Convertir chaque cellule de la colonne numérique
