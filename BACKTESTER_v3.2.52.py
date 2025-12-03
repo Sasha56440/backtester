@@ -278,6 +278,9 @@ def _essayer_conversion_numerique(serie):
     if serie.dtype != object:
         return serie
     
+    if _est_colonne_minutes(serie):
+        return _normaliser_colonne_minutes(serie)
+    
     serie_str = serie.astype(str).str.strip()
     lower = serie_str.str.lower()
     empty_mask = serie_str.eq('') | lower.isin(['nan', 'none'])
@@ -313,6 +316,49 @@ def _proteger_scores(serie):
         serie.loc[a_proteger] = "'" + serie_str.loc[a_proteger]
     
     return serie
+
+MINUTES_REGEX = re.compile(
+    r'^\d{1,3}(?:\+\d{1,2})?(?:\s*,\s*\d{1,3}(?:\+\d{1,2})?)*$'
+)
+
+def _est_colonne_minutes(serie):
+    """Détecte les colonnes listant des minutes séparées par des virgules."""
+    if serie.dtype != object:
+        return False
+    
+    valeurs = serie.dropna().astype(str)
+    if valeurs.empty:
+        return False
+    
+    def est_minutes(val):
+        val = val.strip()
+        if not val or val.lower() in ('nan', 'none'):
+            return False
+        val = val.replace(';', ',')
+        val = val.replace("'", '')
+        return bool(MINUTES_REGEX.match(val))
+    
+    correspondances = valeurs.map(est_minutes)
+    if correspondances.empty:
+        return False
+    
+    return correspondances.mean() >= 0.6
+
+def _normaliser_colonne_minutes(serie):
+    """Nettoie les listes de minutes (séparateur = virgule + espace)."""
+    serie = serie.astype(str)
+    
+    def normaliser(val):
+        val = val.strip()
+        if not val or val.lower() in ('nan', 'none'):
+            return ''
+        val = val.replace(';', ',')
+        val = val.replace("'", '')
+        parties = [p.strip().replace(' ', '') for p in val.split(',')]
+        parties = [p for p in parties if p]
+        return ', '.join(parties)
+    
+    return serie.map(normaliser)
 
 # ====================================================================================================
 # RENOMMAGE INTELLIGENT DES COLONNES
