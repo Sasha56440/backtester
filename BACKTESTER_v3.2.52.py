@@ -385,6 +385,20 @@ def renommer_colonnes_intelligemment(df):
     for i, col in enumerate(colonnes):
         col_str = str(col)
         nouvelle_col = col_str
+        serie_col = df.iloc[:, i]
+        
+        # Colonnes listant des minutes de buts
+        if _est_colonne_minutes(serie_col):
+            if 'Home' in col_str:
+                nouvelle_col = 'Home Goal Minutes'
+            elif 'Away' in col_str:
+                nouvelle_col = 'Away Goal Minutes'
+            else:
+                nouvelle_col = f'{col_str} Goal Minutes'
+            if nouvelle_col != col_str:
+                renommages_effectues.append((col_str, nouvelle_col))
+            nouvelles_colonnes.append(nouvelle_col)
+            continue
         
         # Ajouter AT aux colonnes de cotes Live (sans suffixe .1)
         if any(col_str.startswith(prefix) for prefix in prefixes_cotes):
