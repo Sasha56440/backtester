@@ -13,6 +13,7 @@ import os
 import glob
 from datetime import datetime
 import re
+import csv
 
 # ====================================================================================================
 # CONFIGURATION
@@ -167,6 +168,27 @@ def pause():
     """Met le programme en pause"""
     print("\n" + "-"*80)
     input("📌 Appuyez sur ENTRÉE pour fermer cette fenêtre...")
+
+def detecter_delimiteur_csv(filepath, sample_size=4096):
+    """Détecte automatiquement le délimiteur d'un CSV."""
+    try:
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            sample = f.read(sample_size)
+            f.seek(0)
+    except Exception:
+        return ','
+    
+    if not sample:
+        return ','
+    
+    try:
+        dialect = csv.Sniffer().sniff(sample, delimiters=[',', ';', '\t', '|'])
+        return dialect.delimiter
+    except csv.Error:
+        # Fallback : heuristique simple
+        counts = {sep: sample.count(sep) for sep in [',', ';', '\t', '|']}
+        meilleur = max(counts, key=counts.get)
+        return meilleur if counts[meilleur] > 0 else ','
 
 def convertir_nombre_excel_europeen(valeur):
     """
@@ -376,9 +398,19 @@ def charger_dataset(filepath):
     
     try:
         if extension == '.csv':
-            # Lire le fichier normalement
-            df = pd.read_csv(filepath, skiprows=1, low_memory=False)
-            print(f"  • Fichier CSV chargé (virgule comme séparateur)")
+            delimiteur = detecter_delimiteur_csv(filepath)
+            print(f"  • Fichier CSV détecté (délimiteur='{delimiteur}')")
+            try:
+                df = pd.read_csv(filepath, sep=delimiteur, skiprows=1, low_memory=False)
+            except pd.errors.ParserError:
+                # Reprendre avec l'engine Python, plus permissif
+                df = pd.read_csv(
+                    filepath,
+                    sep=delimiteur,
+                    skiprows=1,
+                    low_memory=False,
+                    engine='python'
+                )
                 
         elif extension in ['.xls', '.xlsx']:
             df = pd.read_excel(filepath)
