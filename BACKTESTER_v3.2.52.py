@@ -335,6 +335,7 @@ def _est_colonne_minutes(serie):
         if not val or val.lower() in ('nan', 'none'):
             return False
         val = val.replace(';', ',')
+        val = val.replace('|', ',')
         val = val.replace("'", '')
         return bool(MINUTES_REGEX.match(val))
     
@@ -353,10 +354,11 @@ def _normaliser_colonne_minutes(serie):
         if not val or val.lower() in ('nan', 'none'):
             return ''
         val = val.replace(';', ',')
+        val = val.replace('|', ',')
         val = val.replace("'", '')
         parties = [p.strip().replace(' ', '') for p in val.split(',')]
         parties = [p for p in parties if p]
-        resultat = ', '.join(parties)
+        resultat = ' | '.join(parties)
         return f"'{resultat}" if resultat else ''
     
     return serie.map(normaliser)
