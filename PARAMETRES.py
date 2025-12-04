@@ -418,6 +418,21 @@ def lire_orc_universel(filepath):
     except Exception as e:
         raise ValueError(f"Erreur lecture ORC: {e}")
 
+
+def rendre_colonnes_uniques(colonnes):
+    """Assainit et déduplique les noms de colonnes"""
+    occurrences = {}
+    colonnes_uniques = []
+    for col in colonnes:
+        nom = str(col).strip()
+        if nom in occurrences:
+            occurrences[nom] += 1
+            colonnes_uniques.append(f"{nom}.{occurrences[nom]}")
+        else:
+            occurrences[nom] = 0
+            colonnes_uniques.append(nom)
+    return colonnes_uniques
+
 # ====================================================================================================
 # LECTEUR UNIVERSEL PRINCIPAL
 # ====================================================================================================
@@ -454,6 +469,8 @@ def lire_dataset_universel(filepath):
     if file_type in lecteurs:
         try:
             df = lecteurs[file_type](filepath)
+            df = df.copy()
+            df.columns = rendre_colonnes_uniques(df.columns)
             return df, file_type
         except Exception as e:
             print(f"  ⚠️ Erreur avec le lecteur {file_type}: {e}")
@@ -461,6 +478,8 @@ def lire_dataset_universel(filepath):
             print("  🔄 Tentative avec lecteur CSV par défaut...")
             try:
                 df = lire_csv_universel(filepath)
+                df = df.copy()
+                df.columns = rendre_colonnes_uniques(df.columns)
                 return df, 'csv'
             except:
                 raise ValueError(f"Impossible de lire le fichier: {filepath}")
@@ -468,6 +487,8 @@ def lire_dataset_universel(filepath):
         # Type inconnu, essayer CSV
         print("  ℹ️ Type inconnu, tentative CSV...")
         df = lire_csv_universel(filepath)
+        df = df.copy()
+        df.columns = rendre_colonnes_uniques(df.columns)
         return df, 'csv'
 
 # ====================================================================================================
@@ -493,36 +514,37 @@ def analyser_structure_dataset(df):
         }
     }
     
-    for col in df.columns:
+    for idx, col in enumerate(df.columns):
+        serie = df.iloc[:, idx]
         col_info = {
             'nom': col,
-            'type_pandas': str(df[col].dtype),
-            'valeurs_uniques': df[col].nunique(),
-            'valeurs_nulles': df[col].isnull().sum(),
-            'taux_remplissage': (1 - df[col].isnull().sum() / len(df)) * 100
+            'type_pandas': str(serie.dtype),
+            'valeurs_uniques': serie.nunique(dropna=False),
+            'valeurs_nulles': serie.isnull().sum(),
+            'taux_remplissage': (1 - serie.isnull().sum() / len(df)) * 100
         }
         
         # Détection du type réel
-        if pd.api.types.is_datetime64_any_dtype(df[col]):
+        if pd.api.types.is_datetime64_any_dtype(serie):
             col_info['type_reel'] = 'date'
             structure['types_detectes']['dates'].append(col)
-        elif pd.api.types.is_bool_dtype(df[col]):
+        elif pd.api.types.is_bool_dtype(serie):
             col_info['type_reel'] = 'booleen'
             structure['types_detectes']['booleens'].append(col)
-        elif pd.api.types.is_numeric_dtype(df[col]):
+        elif pd.api.types.is_numeric_dtype(serie):
             col_info['type_reel'] = 'numerique'
             structure['types_detectes']['numeriques'].append(col)
         else:
             # Analyser plus en détail les colonnes non-numériques
             try:
                 # Essayer de convertir en numérique
-                pd.to_numeric(df[col], errors='raise')
+                pd.to_numeric(serie, errors='raise')
                 col_info['type_reel'] = 'numerique_texte'
                 structure['types_detectes']['numeriques'].append(col)
             except:
                 # Vérifier si c'est une date
                 try:
-                    pd.to_datetime(df[col], errors='raise')
+                    pd.to_datetime(serie, errors='raise')
                     col_info['type_reel'] = 'date_texte'
                     structure['types_detectes']['dates'].append(col)
                 except:
