@@ -13,6 +13,7 @@ import os
 import glob
 from datetime import datetime
 import re
+import csv
 
 # ====================================================================================================
 # CONFIGURATION
@@ -168,6 +169,55 @@ def pause():
     print("\n" + "-"*80)
     input("📌 Appuyez sur ENTRÉE pour fermer cette fenêtre...")
 
+def detecter_delimiteur_csv(filepath, sample_size=4096):
+    """Détecte automatiquement le délimiteur d'un CSV."""
+    try:
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            sample = f.read(sample_size)
+            f.seek(0)
+    except Exception:
+        return ','
+    
+    if not sample:
+        return ','
+    
+    try:
+        dialect = csv.Sniffer().sniff(sample, delimiters=[',', ';', '\t', '|'])
+        return dialect.delimiter
+    except csv.Error:
+        # Fallback : heuristique simple
+        counts = {sep: sample.count(sep) for sep in [',', ';', '\t', '|']}
+        meilleur = max(counts, key=counts.get)
+        return meilleur if counts[meilleur] > 0 else ','
+
+def lire_csv_robuste(filepath):
+    """Lit un CSV en testant plusieurs délimiteurs et moteurs pandas."""
+    delim_detecte = detecter_delimiteur_csv(filepath)
+    candidats = [delim_detecte] + [d for d in [',', ';', '\t', '|'] if d != delim_detecte]
+    derniere_exception = None
+    
+    for delim in candidats:
+        print(f"  • Tentative lecture CSV (délimiteur='{delim}', moteur='c')")
+        try:
+            df = pd.read_csv(filepath, sep=delim, skiprows=1, low_memory=False)
+            print(f"    ✅ Lecture réussie avec délimiteur '{delim}'")
+            return df, delim
+        except pd.errors.ParserError as exc:
+            derniere_exception = exc
+            print("    ↪️ ParserError avec moteur C, essai moteur 'python'...")
+            try:
+                df = pd.read_csv(filepath, sep=delim, skiprows=1, engine='python')
+                print(f"    ✅ Lecture réussie avec délimiteur '{delim}' (moteur python)")
+                return df, delim
+            except Exception as exc_py:
+                derniere_exception = exc_py
+                print(f"    ❌ Échec avec délimiteur '{delim}' (moteur python)")
+                continue
+    
+    if derniere_exception:
+        raise derniere_exception
+    raise ValueError("Impossible de lire le fichier CSV")
+
 def convertir_nombre_excel_europeen(valeur):
     """
     Convertit simplement un nombre au format Excel européen
@@ -205,6 +255,114 @@ def convertir_nombre_excel_europeen(valeur):
         # Ce n'est pas un nombre, retourner tel quel
         return val_str
 
+def _forcer_type_entier(serie):
+    """Convertit en entier si toutes les valeurs sont entières."""
+    if not pd.api.types.is_numeric_dtype(serie):
+        return serie
+    valeurs = serie.dropna()
+    if valeurs.empty:
+        return serie
+    fractions = np.modf(valeurs.to_numpy(dtype=float))[0]
+    if np.allclose(fractions, 0, atol=1e-9):
+        return serie.round().astype('Int64')
+    return serie
+
+def _essayer_conversion_numerique(serie):
+    """
+    Tente de convertir une série objet en numérique en gérant
+    les virgules et les symboles %.
+    """
+    if pd.api.types.is_numeric_dtype(serie):
+        return _forcer_type_entier(serie)
+    
+    if serie.dtype != object:
+        return serie
+    
+    if _est_colonne_minutes(serie):
+        return _normaliser_colonne_minutes(serie)
+    
+    serie_str = serie.astype(str).str.strip()
+    lower = serie_str.str.lower()
+    empty_mask = serie_str.eq('') | lower.isin(['nan', 'none'])
+    serie_str = serie_str.mask(empty_mask)
+    
+    if serie_str.dropna().empty:
+        return serie
+    
+    cleaned = (serie_str
+               .str.replace("'", '', regex=False)
+               .str.replace('%', '', regex=False)
+               .str.replace(' ', '', regex=False)
+               .str.replace(',', '.', regex=False))
+    
+    numeric = pd.to_numeric(cleaned, errors='coerce')
+    if numeric.notna().sum() == serie_str.notna().sum():
+        return _forcer_type_entier(numeric)
+    
+    return serie
+
+def _proteger_scores(serie):
+    """Ajoute un ' devant les valeurs de type score (ex: 1-2)."""
+    if serie.dtype != object:
+        return serie
+    
+    serie_str = serie.astype(str)
+    mask = serie_str.str.match(r'^\d+-\d+$')
+    
+    if mask.any():
+        serie = serie.copy()
+        deja_protege = serie_str.str.startswith("'")
+        a_proteger = mask & ~deja_protege
+        serie.loc[a_proteger] = "'" + serie_str.loc[a_proteger]
+    
+    return serie
+
+MINUTES_REGEX = re.compile(
+    r'^\d{1,3}(?:\+\d{1,2})?(?:\s*,\s*\d{1,3}(?:\+\d{1,2})?)*$'
+)
+
+def _est_colonne_minutes(serie):
+    """Détecte les colonnes listant des minutes séparées par des virgules."""
+    if serie.dtype != object:
+        return False
+    
+    valeurs = serie.dropna().astype(str)
+    if valeurs.empty:
+        return False
+    
+    def est_minutes(val):
+        val = val.strip()
+        if not val or val.lower() in ('nan', 'none'):
+            return False
+        val = val.replace(';', ',')
+        val = val.replace('|', ',')
+        val = val.replace("'", '')
+        return bool(MINUTES_REGEX.match(val))
+    
+    correspondances = valeurs.map(est_minutes)
+    if correspondances.empty:
+        return False
+    
+    return correspondances.mean() >= 0.6
+
+def _normaliser_colonne_minutes(serie):
+    """Nettoie les listes de minutes (séparateur = virgule + espace)."""
+    serie = serie.astype(str)
+    
+    def normaliser(val):
+        val = val.strip()
+        if not val or val.lower() in ('nan', 'none'):
+            return ''
+        val = val.replace(';', ',')
+        val = val.replace('|', ',')
+        val = val.replace("'", '')
+        parties = [p.strip().replace(' ', '') for p in val.split(',')]
+        parties = [p for p in parties if p]
+        resultat = '|'.join(parties)
+        return resultat
+    
+    return serie.map(normaliser)
+
 # ====================================================================================================
 # RENOMMAGE INTELLIGENT DES COLONNES
 # ====================================================================================================
@@ -217,16 +375,63 @@ def renommer_colonnes_intelligemment(df):
     print("-" * 80)
     
     colonnes = df.columns.tolist()
+    
+    for idx, nom_exact in NOMS_COLONNES_EXACTES.items():
+        if idx < len(colonnes):
+            colonnes[idx] = nom_exact
+    
     nouvelles_colonnes = []
     stats_de_base = ['Score', 'Momentum', 'xG', 'SOT', 'SOFF', 'Corners', 
                      'Attacks', 'Dn Attacks', 'Poss %', 'Y Cards', 'R Cards', 'Penalties']
     
     compteur_stats = {stat: {'H': 0, 'A': 0} for stat in stats_de_base}
+    compteur_stats_globaux = {stat: 0 for stat in stats_de_base}
     renommages_effectues = []
+    
+    prefixes_cotes = ('3-Way', 'Over', 'Under', 'BTTS')
     
     for i, col in enumerate(colonnes):
         col_str = str(col)
         nouvelle_col = col_str
+        serie_col = df.iloc[:, i]
+        
+        # Colonnes listant des minutes de buts
+        if _est_colonne_minutes(serie_col):
+            if 'Home' in col_str:
+                nouvelle_col = 'Home Goal Minutes'
+            elif 'Away' in col_str:
+                nouvelle_col = 'Away Goal Minutes'
+            else:
+                nouvelle_col = f'{col_str} Goal Minutes'
+            if nouvelle_col != col_str:
+                renommages_effectues.append((col_str, nouvelle_col))
+            nouvelles_colonnes.append(nouvelle_col)
+            continue
+        
+        # Ajouter AT aux colonnes de cotes Live (sans suffixe .1)
+        if any(col_str.startswith(prefix) for prefix in prefixes_cotes):
+            if '.' not in col_str and not col_str.endswith(' AT'):
+                nouvelle_col = f'{col_str} AT'
+                renommages_effectues.append((col_str, nouvelle_col))
+                nouvelles_colonnes.append(nouvelle_col)
+                continue
+        
+        # Colonnes globales (sans préfixe H/A)
+        if col_str in stats_de_base:
+            count = compteur_stats_globaux[col_str]
+            if count == 0:
+                nouvelle_col = f'{col_str} AT'
+            elif count == 1:
+                nouvelle_col = f'{col_str} HT'
+            elif count == 2:
+                nouvelle_col = f'{col_str} FT'
+            else:
+                nouvelle_col = f'{col_str} {count}'
+            compteur_stats_globaux[col_str] += 1
+            if nouvelle_col != col_str:
+                renommages_effectues.append((col_str, nouvelle_col))
+            nouvelles_colonnes.append(nouvelle_col)
+            continue
         
         # Détecter les colonnes de stats
         for stat in stats_de_base:
@@ -262,10 +467,13 @@ def renommer_colonnes_intelligemment(df):
         if nouvelle_col == col_str and '.' in col_str:
             base, suffix = col_str.rsplit('.', 1)
             if suffix.isdigit():
-                # Ne PAS renommer les colonnes de cotes (3-Way, Goals, BTTS)
-                if any(x in base for x in ['3-Way', 'Goals', 'BTTS']):
-                    # Garder le nom original pour les cotes Pre-Match
-                    nouvelle_col = col_str
+                if any(base.startswith(prefix) for prefix in prefixes_cotes):
+                    if suffix == '1':
+                        nouvelle_col = f'{base} Pre-Match'
+                        if nouvelle_col != col_str:
+                            renommages_effectues.append((col_str, nouvelle_col))
+                    else:
+                        nouvelle_col = col_str
                 else:
                     # Renommer les autres colonnes normalement
                     suffix_int = int(suffix)
@@ -304,9 +512,8 @@ def charger_dataset(filepath):
     
     try:
         if extension == '.csv':
-            # Lire le fichier normalement
-            df = pd.read_csv(filepath, skiprows=1, low_memory=False)
-            print(f"  • Fichier CSV chargé (virgule comme séparateur)")
+            df, delimiteur = lire_csv_robuste(filepath)
+            print(f"  • Fichier CSV chargé (délimiteur final='{delimiteur}')")
                 
         elif extension in ['.xls', '.xlsx']:
             df = pd.read_excel(filepath)
@@ -477,38 +684,47 @@ def calculer_fav_und(df, colonnes_list, seuil=SEUIL_FAVORI):
 
 def convertir_dataframe_excel_europeen_final(df):
     """
-    Convertit TOUT le DataFrame au format Excel européen
-    Y COMPRIS les colonnes de cotes
+    Prépare le DataFrame pour l'export Excel européen :
+    • Colonne Date conservée en datetime
+    • Colonnes numériques converties en nombres (avec virgule à l'export)
+    • Scores protégés pour éviter les auto-conversions Excel
     """
     print("\n🔧 Conversion finale au format Excel européen...")
     
-    colonnes_texte = ['Date', 'Timer', 'Strike', 'Region', 'League', 'Home', 'Away']
-    colonnes_converties = 0
+    colonnes_texte = {'Timer', 'Strike', 'Region', 'League', 'Home', 'Away'}
+    colonnes_normalisees = 0
     
-    # Créer un DataFrame de résultat avec toutes les colonnes en object (string)
-    df_resultat = pd.DataFrame(index=df.index)
+    if df.empty:
+        return df
     
-    # Convertir TOUTES les colonnes
-    for i, col in enumerate(df.columns):
-        col_str = str(col)
-        
-        # Skip les colonnes texte - les copier telles quelles
-        if any(txt in col_str for txt in colonnes_texte):
-            df_resultat[col] = df.iloc[:, i].astype(str)
+    df_resultat = df.copy()
+    
+    date_col = df_resultat.columns[0]
+    try:
+        df_resultat[date_col] = pd.to_datetime(df_resultat[date_col], errors='coerce')
+        print("  ✅ Colonne Date convertie au format datetime")
+    except Exception:
+        print("  ⚠️ Impossible de convertir la colonne Date")
+    
+    for col in df_resultat.columns:
+        if col == date_col:
             continue
         
-        # Convertir chaque cellule de la colonne numérique
-        nouvelle_colonne = []
-        for val in df.iloc[:, i]:
-            val_convertie = convertir_nombre_excel_europeen(val)
-            nouvelle_colonne.append(val_convertie)
+        if col in colonnes_texte:
+            df_resultat[col] = df_resultat[col].astype(str).fillna('')
+            continue
         
-        # Forcer en string pour garder les virgules
-        df_resultat[col] = nouvelle_colonne
-        colonnes_converties += 1
+        serie_orig = df_resultat[col]
+        serie_convertie = _essayer_conversion_numerique(serie_orig)
+        
+        if serie_convertie is serie_orig:
+            serie_convertie = _proteger_scores(serie_convertie)
+        else:
+            colonnes_normalisees += 1
+        
+        df_resultat[col] = serie_convertie
     
-    print(f"  ✅ {colonnes_converties} colonnes converties")
-    print(f"  ✅ Colonnes de cotes (96, 98) incluses")
+    print(f"  ✅ {colonnes_normalisees} colonnes numériques normalisées")
     
     return df_resultat
 
@@ -522,9 +738,8 @@ def formater_colonne_date(df):
         date_col = df.columns[0]
         try:
             dates = pd.to_datetime(df[date_col], errors='coerce')
-            df[date_col] = dates.dt.strftime('%d/%m/%Y %H:%M')
-            df[date_col] = df[date_col].fillna('')
-            print("  ✅ Colonne Date formatée : JJ/MM/AAAA HH:MM")
+            df[date_col] = dates
+            print("  ✅ Colonne Date convertie en datetime")
             return True
         except:
             pass
@@ -541,7 +756,14 @@ def sauvegarder_resultats(df, fichier_source):
     output_excel = f"{nom_base}_BACKTESTER_{timestamp}.csv"
     
     # Sauvegarder avec point-virgule comme séparateur
-    df.to_csv(output_excel, sep=';', index=False, encoding='utf-8-sig')
+    df.to_csv(
+        output_excel,
+        sep=';',
+        index=False,
+        encoding='utf-8-sig',
+        decimal=',',
+        date_format='%d/%m/%Y %H:%M'
+    )
     
     print(f"  ✅ {output_excel}")
     print(f"     • Séparateur colonnes : point-virgule (;)")
