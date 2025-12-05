@@ -1,0 +1,296 @@
+1	DONNES BRUTES issues uniquement des datasets (.csv)	Match Data	Date
+2	DONNES BRUTES issues uniquement des datasets (.csv)	Match Data	Timer
+3	DONNES BRUTES issues uniquement des datasets (.csv)	Match Data	Strike
+4	DONNES BRUTES issues uniquement des datasets (.csv)	Match Data	Region
+5	DONNES BRUTES issues uniquement des datasets (.csv)	Match Data	League
+6	DONNES BRUTES issues uniquement des datasets (.csv)	Match Data	Home
+7	DONNES BRUTES issues uniquement des datasets (.csv)	Match Data	Away
+8	DONNES BRUTES issues uniquement des datasets (.csv)	Match Data	Home Pos
+9	DONNES BRUTES issues uniquement des datasets (.csv)	Match Data	Away Pos
+10	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H Score
+11	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A Score
+12	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H Momentum
+13	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A Momentum
+14	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H xG
+15	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A xG
+16	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H SOT
+17	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A SOT
+18	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H SOFF
+19	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A SOFF
+20	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H Corners
+21	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A Corners
+22	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H Attacks
+23	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A Attacks
+24	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H Dn Attacks
+25	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A Dn Attacks
+26	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H Poss %
+27	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A Poss %
+28	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H Y Cards
+29	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A Y Cards
+30	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H R Cards
+31	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A R Cards
+32	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	H Penalties
+33	DONNES BRUTES issues uniquement des datasets (.csv)	Alert Time Stats	A Penalties
+34	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H Score
+35	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A Score
+36	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H Momentum
+37	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A Momentum
+38	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H xG
+39	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A xG
+40	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H SOT
+41	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A SOT
+42	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H SOFF
+43	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A SOFF
+44	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H Corners
+45	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A Corners
+46	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H Attacks
+47	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A Attacks
+48	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H Dn Attacks
+49	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A Dn Attacks
+50	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H Poss %
+51	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A Poss %
+52	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H Y Cards
+53	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A Y Cards
+54	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H R Cards
+55	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A R Cards
+56	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	H Penalties
+57	DONNES BRUTES issues uniquement des datasets (.csv)	Half Time Stats	A Penalties
+58	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H Score
+59	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A Score
+60	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H Momentum
+61	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A Momentum
+62	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H xG
+63	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A xG
+64	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H SOT
+65	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A SOT
+66	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H SOFF
+67	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A SOFF
+68	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H Corners
+69	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A Corners
+70	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H Attacks
+71	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A Attacks
+72	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H Dn Attacks
+73	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A Dn Attacks
+74	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H Poss %
+75	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A Poss %
+76	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H Y Cards
+77	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A Y Cards
+78	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H R Cards
+79	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A R Cards
+80	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	H Penalties
+81	DONNES BRUTES issues uniquement des datasets (.csv)	Full Time Stats	A Penalties
+82	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	3-Way: Home
+83	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	3-Way: Draw
+84	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	3-Way: Away
+85	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	Over 0.5 Goals
+86	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	Under 0.5 Goals
+87	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	Over 1.5 Goals
+88	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	Under 1.5 Goals
+89	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	Over 2.5 Goals
+90	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	Under 2.5 Goals
+91	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	Over 3.5 Goals
+92	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	Under 3.5 Goals
+93	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	Over 4.5 Goals
+94	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	Under 4.5 Goals
+95	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	BTTS: Yes
+96	DONNES BRUTES issues uniquement des datasets (.csv)	Live Odds (Alert Time)	BTTS: No
+97	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	3-Way: Home
+98	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	3-Way: Draw
+99	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	3-Way: Away
+100	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	Over 0.5 Goals
+101	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	Under 0.5 Goals
+102	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	Over 1.5 Goals
+103	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	Under 1.5 Goals
+104	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	Over 2.5 Goals
+105	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	Under 2.5 Goals
+106	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	Over 3.5 Goals
+107	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	Under 3.5 Goals
+108	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	Over 4.5 Goals
+109	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	Under 4.5 Goals
+110	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	BTTS: Yes
+111	DONNES BRUTES issues uniquement des datasets (.csv)	Pre-Match Odds	BTTS: No
+112	DONNES BRUTES issues uniquement des datasets (.csv)	Goal Times	Home
+113	DONNES BRUTES issues uniquement des datasets (.csv)	Goal Times	Away
+114	DONNES BRUTES issues uniquement des datasets (.csv)	Summary	Score
+115	DONNES BRUTES issues uniquement des datasets (.csv)	Summary	HT Score
+116	DONNES BRUTES issues uniquement des datasets (.csv)	Summary	FT Score
+117	DONNES BRUTES issues uniquement des datasets (.csv)	Summary	Corners
+118	DONNES BRUTES issues uniquement des datasets (.csv)	Summary	HT Corners
+119	DONNES BRUTES issues uniquement des datasets (.csv)	Summary	FT Corners
+120	BACKTESTER	MODALITES	1MT/2MT
+121	BACKTESTER	MODALITES	1MT⇔2MT
+122	BACKTESTER	MODALITES	Fav/Und 1MT
+123	BACKTESTER	MODALITES	Fav/Und 2MT
+124	BACKTESTER	MODALITES	Fav/Und Total
+125	BACKTESTER	MODALITES	H/A 1MT
+126	BACKTESTER	MODALITES	H/A 2MT
+127	BACKTESTER	MODALITES	H/A Total
+128	BACKTESTER	MODALITES	Dif H/A 1MT
+129	BACKTESTER	MODALITES	Dif H/A 2MT
+130	BACKTESTER	MODALITES	Dif H/A Total
+131	BACKTESTER	MODALITES	Dif Fav/Und 1MT
+132	BACKTESTER	MODALITES	Dif Fav/Und 2MT
+133	BACKTESTER	MODALITES	Dif Fav/Und Total
+134	BACKTESTER	MODALITES	F/U@H/A
+135	BACKTESTER	MODALITES	Sum 1MT
+136	BACKTESTER	MODALITES	Sum 2MT
+137	BACKTESTER	MODALITES	Sum Total
+138	BACKTESTER	PARAMÈTRES H/A	1.Home Score (AT)
+139	BACKTESTER	PARAMÈTRES H/A	2.Away Score (AT)
+140	BACKTESTER	PARAMÈTRES H/A	3.Home Momentum (AT)
+141	BACKTESTER	PARAMÈTRES H/A	4.Away Momentum (AT)
+142	BACKTESTER	PARAMÈTRES H/A	5.Home xG (AT)
+143	BACKTESTER	PARAMÈTRES H/A	6.Away xG (AT)
+144	BACKTESTER	PARAMÈTRES H/A	7.Home SOT (AT)
+145	BACKTESTER	PARAMÈTRES H/A	8.Away SOT (AT)
+146	BACKTESTER	PARAMÈTRES H/A	9.Home SOFF (AT)
+147	BACKTESTER	PARAMÈTRES H/A	10.Away SOFF (AT)
+148	BACKTESTER	PARAMÈTRES H/A	11.Home Corners (AT)
+149	BACKTESTER	PARAMÈTRES H/A	12.Away Corners (AT)
+150	BACKTESTER	PARAMÈTRES H/A	13.Home Attacks (AT)
+151	BACKTESTER	PARAMÈTRES H/A	14.Away Attacks (AT)
+152	BACKTESTER	PARAMÈTRES H/A	15.Home Dn Attacks (AT)
+153	BACKTESTER	PARAMÈTRES H/A	16.Away Dn Attacks (AT)
+154	BACKTESTER	PARAMÈTRES H/A	17.Home Poss % (AT)
+155	BACKTESTER	PARAMÈTRES H/A	18.Away Poss % (AT)
+156	BACKTESTER	PARAMÈTRES H/A	19.Home Y Cards (AT)
+157	BACKTESTER	PARAMÈTRES H/A	20.Away Y Cards (AT)
+158	BACKTESTER	PARAMÈTRES H/A	21.Home R Cards (AT)
+159	BACKTESTER	PARAMÈTRES H/A	22.Away R Cards (AT)
+160	BACKTESTER	PARAMÈTRES H/A	23.Home Penalties (AT)
+161	BACKTESTER	PARAMÈTRES H/A	24.Away Penalties (AT)
+162	BACKTESTER	PARAMÈTRES H/A	1.Home Score (HT)
+163	BACKTESTER	PARAMÈTRES H/A	2.Away Score (HT)
+164	BACKTESTER	PARAMÈTRES H/A	3.Home Momentum (HT)
+165	BACKTESTER	PARAMÈTRES H/A	4.Away Momentum (HT)
+166	BACKTESTER	PARAMÈTRES H/A	5.Home xG (HT)
+167	BACKTESTER	PARAMÈTRES H/A	6.Away xG (HT)
+168	BACKTESTER	PARAMÈTRES H/A	7.Home SOT (HT)
+169	BACKTESTER	PARAMÈTRES H/A	8.Away SOT (HT)
+170	BACKTESTER	PARAMÈTRES H/A	9.Home SOFF (HT)
+171	BACKTESTER	PARAMÈTRES H/A	10.Away SOFF (HT)
+172	BACKTESTER	PARAMÈTRES H/A	11.Home Corners (HT)
+173	BACKTESTER	PARAMÈTRES H/A	12.Away Corners (HT)
+174	BACKTESTER	PARAMÈTRES H/A	13.Home Attacks (HT)
+175	BACKTESTER	PARAMÈTRES H/A	14.Away Attacks (HT)
+176	BACKTESTER	PARAMÈTRES H/A	15.Home Dn Attacks (HT)
+177	BACKTESTER	PARAMÈTRES H/A	16.Away Dn Attacks (HT)
+178	BACKTESTER	PARAMÈTRES H/A	17.Home Poss % (HT)
+179	BACKTESTER	PARAMÈTRES H/A	18.Away Poss % (HT)
+180	BACKTESTER	PARAMÈTRES H/A	19.Home Y Cards (HT)
+181	BACKTESTER	PARAMÈTRES H/A	20.Away Y Cards (HT)
+182	BACKTESTER	PARAMÈTRES H/A	21.Home R Cards (HT)
+183	BACKTESTER	PARAMÈTRES H/A	22.Away R Cards (HT)
+184	BACKTESTER	PARAMÈTRES H/A	23.Home Penalties (HT)
+185	BACKTESTER	PARAMÈTRES H/A	24.Away Penalties (HT)
+186	BACKTESTER	PARAMÈTRES H/A	1.Home Score (FT)
+187	BACKTESTER	PARAMÈTRES H/A	2.Away Score (FT)
+188	BACKTESTER	PARAMÈTRES H/A	3.Home Momentum (FT)
+189	BACKTESTER	PARAMÈTRES H/A	4.Away Momentum (FT)
+190	BACKTESTER	PARAMÈTRES H/A	5.Home xG (FT)
+191	BACKTESTER	PARAMÈTRES H/A	6.Away xG (FT)
+192	BACKTESTER	PARAMÈTRES H/A	7.Home SOT (FT)
+193	BACKTESTER	PARAMÈTRES H/A	8.Away SOT (FT)
+194	BACKTESTER	PARAMÈTRES H/A	9.Home SOFF (FT)
+195	BACKTESTER	PARAMÈTRES H/A	10.Away SOFF (FT)
+196	BACKTESTER	PARAMÈTRES H/A	11.Home Corners (FT)
+197	BACKTESTER	PARAMÈTRES H/A	12.Away Corners (FT)
+198	BACKTESTER	PARAMÈTRES H/A	13.Home Attacks (FT)
+199	BACKTESTER	PARAMÈTRES H/A	14.Away Attacks (FT)
+200	BACKTESTER	PARAMÈTRES H/A	15.Home Dn Attacks (FT)
+201	BACKTESTER	PARAMÈTRES H/A	16.Away Dn Attacks (FT)
+202	BACKTESTER	PARAMÈTRES H/A	17.Home Poss % (FT)
+203	BACKTESTER	PARAMÈTRES H/A	18.Away Poss % (FT)
+204	BACKTESTER	PARAMÈTRES H/A	19.Home Y Cards (FT)
+205	BACKTESTER	PARAMÈTRES H/A	20.Away Y Cards (FT)
+206	BACKTESTER	PARAMÈTRES H/A	21.Home R Cards (FT)
+207	BACKTESTER	PARAMÈTRES H/A	22.Away R Cards (FT)
+208	BACKTESTER	PARAMÈTRES H/A	23.Home Penalties (FT)
+209	BACKTESTER	PARAMÈTRES H/A	24.Away Penalties (FT)
+210	BACKTESTER	PARAMÈTRES Fav/Und	1.Fav Score (AT)
+211	BACKTESTER	PARAMÈTRES Fav/Und	2.Und Score (AT)
+212	BACKTESTER	PARAMÈTRES Fav/Und	3.Fav Momentum (AT)
+213	BACKTESTER	PARAMÈTRES Fav/Und	4.Und Momentum (AT)
+214	BACKTESTER	PARAMÈTRES Fav/Und	5.Fav xG (AT)
+215	BACKTESTER	PARAMÈTRES Fav/Und	6.Und xG (AT)
+216	BACKTESTER	PARAMÈTRES Fav/Und	7.Fav SOT (AT)
+217	BACKTESTER	PARAMÈTRES Fav/Und	8.Und SOT (AT)
+218	BACKTESTER	PARAMÈTRES Fav/Und	9.Fav SOFF (AT)
+219	BACKTESTER	PARAMÈTRES Fav/Und	10.Und SOFF (AT)
+220	BACKTESTER	PARAMÈTRES Fav/Und	11.Fav Corners (AT)
+221	BACKTESTER	PARAMÈTRES Fav/Und	12.Und Corners (AT)
+222	BACKTESTER	PARAMÈTRES Fav/Und	13.Fav Attacks (AT)
+223	BACKTESTER	PARAMÈTRES Fav/Und	14.Und Attacks (AT)
+224	BACKTESTER	PARAMÈTRES Fav/Und	15.Fav Dn Attacks (AT)
+225	BACKTESTER	PARAMÈTRES Fav/Und	16.Und Dn Attacks (AT)
+226	BACKTESTER	PARAMÈTRES Fav/Und	17.Fav Poss % (AT)
+227	BACKTESTER	PARAMÈTRES Fav/Und	18.Und Poss % (AT)
+228	BACKTESTER	PARAMÈTRES Fav/Und	19.Fav Y Cards (AT)
+229	BACKTESTER	PARAMÈTRES Fav/Und	20.Und Y Cards (AT)
+230	BACKTESTER	PARAMÈTRES Fav/Und	21.Fav R Cards (AT)
+231	BACKTESTER	PARAMÈTRES Fav/Und	22.Und R Cards (AT)
+232	BACKTESTER	PARAMÈTRES Fav/Und	23.Fav Penalties (AT)
+233	BACKTESTER	PARAMÈTRES Fav/Und	24.Und Penalties (AT)
+234	BACKTESTER	PARAMÈTRES Fav/Und	1.Fav Score (HT)
+235	BACKTESTER	PARAMÈTRES Fav/Und	2.Und Score (HT)
+236	BACKTESTER	PARAMÈTRES Fav/Und	3.Fav Momentum (HT)
+237	BACKTESTER	PARAMÈTRES Fav/Und	4.Und Momentum (HT)
+238	BACKTESTER	PARAMÈTRES Fav/Und	5.Fav xG (HT)
+239	BACKTESTER	PARAMÈTRES Fav/Und	6.Und xG (HT)
+240	BACKTESTER	PARAMÈTRES Fav/Und	7.Fav SOT (HT)
+241	BACKTESTER	PARAMÈTRES Fav/Und	8.Und SOT (HT)
+242	BACKTESTER	PARAMÈTRES Fav/Und	9.Fav SOFF (HT)
+243	BACKTESTER	PARAMÈTRES Fav/Und	10.Und SOFF (HT)
+244	BACKTESTER	PARAMÈTRES Fav/Und	11.Fav Corners (HT)
+245	BACKTESTER	PARAMÈTRES Fav/Und	12.Und Corners (HT)
+246	BACKTESTER	PARAMÈTRES Fav/Und	13.Fav Attacks (HT)
+247	BACKTESTER	PARAMÈTRES Fav/Und	14.Und Attacks (HT)
+248	BACKTESTER	PARAMÈTRES Fav/Und	15.Fav Dn Attacks (HT)
+249	BACKTESTER	PARAMÈTRES Fav/Und	16.Und Dn Attacks (HT)
+250	BACKTESTER	PARAMÈTRES Fav/Und	17.Fav Poss % (HT)
+251	BACKTESTER	PARAMÈTRES Fav/Und	18.Und Poss % (HT)
+252	BACKTESTER	PARAMÈTRES Fav/Und	19.Fav Y Cards (HT)
+253	BACKTESTER	PARAMÈTRES Fav/Und	20.Und Y Cards (HT)
+254	BACKTESTER	PARAMÈTRES Fav/Und	21.Fav R Cards (HT)
+255	BACKTESTER	PARAMÈTRES Fav/Und	22.Und R Cards (HT)
+256	BACKTESTER	PARAMÈTRES Fav/Und	23.Fav Penalties (HT)
+257	BACKTESTER	PARAMÈTRES Fav/Und	24.Und Penalties (HT)
+258	BACKTESTER	PARAMÈTRES Fav/Und	1.Fav Score (FT)
+259	BACKTESTER	PARAMÈTRES Fav/Und	2.Und Score (FT)
+260	BACKTESTER	PARAMÈTRES Fav/Und	3.Fav Momentum (FT)
+261	BACKTESTER	PARAMÈTRES Fav/Und	4.Und Momentum (FT)
+262	BACKTESTER	PARAMÈTRES Fav/Und	5.Fav xG (FT)
+263	BACKTESTER	PARAMÈTRES Fav/Und	6.Und xG (FT)
+264	BACKTESTER	PARAMÈTRES Fav/Und	7.Fav SOT (FT)
+265	BACKTESTER	PARAMÈTRES Fav/Und	8.Und SOT (FT)
+266	BACKTESTER	PARAMÈTRES Fav/Und	9.Fav SOFF (FT)
+267	BACKTESTER	PARAMÈTRES Fav/Und	10.Und SOFF (FT)
+268	BACKTESTER	PARAMÈTRES Fav/Und	11.Fav Corners (FT)
+269	BACKTESTER	PARAMÈTRES Fav/Und	12.Und Corners (FT)
+270	BACKTESTER	PARAMÈTRES Fav/Und	13.Fav Attacks (FT)
+271	BACKTESTER	PARAMÈTRES Fav/Und	14.Und Attacks (FT)
+272	BACKTESTER	PARAMÈTRES Fav/Und	15.Fav Dn Attacks (FT)
+273	BACKTESTER	PARAMÈTRES Fav/Und	16.Und Dn Attacks (FT)
+274	BACKTESTER	PARAMÈTRES Fav/Und	17.Fav Poss % (FT)
+275	BACKTESTER	PARAMÈTRES Fav/Und	18.Und Poss % (FT)
+276	BACKTESTER	PARAMÈTRES Fav/Und	19.Fav Y Cards (FT)
+277	BACKTESTER	PARAMÈTRES Fav/Und	20.Und Y Cards (FT)
+278	BACKTESTER	PARAMÈTRES Fav/Und	21.Fav R Cards (FT)
+279	BACKTESTER	PARAMÈTRES Fav/Und	22.Und R Cards (FT)
+280	BACKTESTER	PARAMÈTRES Fav/Und	23.Fav Penalties (FT)
+281	BACKTESTER	PARAMÈTRES Fav/Und	24.Und Penalties (FT)
+282	BACKTESTER	ODDS	Catégorie
+283	BACKTESTER	ODDS	Interprétation (Si Fav)
+284	BACKTESTER	ODDS	Calcul LTD
+285	BACKTESTER	ODDS	Calcul 1X
+286	BACKTESTER	ODDS	Calcul X2
+287	BACKTESTER	LIGUES	Nom ligue BetFair
+288	BACKTESTER	TYPES DE PARIS	(vide?)
+289	BACKTESTER	CHRONOANALYSE	1. **VAR_TEMP_periode_journee** : matin / midi / aprem / soirée / nuit
+290	BACKTESTER	CHRONOANALYSE	2. **VAR_TEMP_jour_semaine** : lundi → dimanche
+291	BACKTESTER	CHRONOANALYSE	3. **VAR_TEMP_mois** : janvier → décembre
+292	BACKTESTER	CHRONOANALYSE	4. **VAR_TEMP_weekend** : True (ven ≥18h, sam, dim) / False
+293	BACKTESTER	CHRONOANALYSE	5. **VAR_TEMP_debut_saison** : True (5 PREMIERS matchs) / False
+294	BACKTESTER	CHRONOANALYSE	6. **VAR_TEMP_fin_saison** : True (5 DERNIERS matchs) / False
+295	BACKTESTER	CHRONOANALYSE	7. **VAR_TEMP_treve_fifa** : True (détection auto) / False
+296	BACKTESTER	CHRONOANALYSE	8. **VAR_TEMP_periode_fetes** : True (20 déc → 7 jan) / False
